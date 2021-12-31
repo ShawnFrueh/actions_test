@@ -26,7 +26,7 @@ jobs:
       # Get the version
       - name: Set variables
         run: |
-          VER=$(cat VERSION)
+          VER=$(cat VERSION.txt)
           echo "KIT_VERSION=$VER" >> $GITHUB_ENV
       # Package zip
       - name: Package Kit
