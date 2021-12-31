@@ -11,7 +11,8 @@ kit_dir = repo_dir / "test_kit"
 build_dir = repo_dir / "build"
 # Get the license file
 license_file = repo_dir / "LICENSE"
-version = 10
+with repo_dir.joinpath("VERSION").open("r") as version_file:
+    version = version_file.read().strip()
 
 # Get all files in the kit directory and male sure no pyc files come along
 kit_files = [f for f in kit_dir.glob("**/*") if f.is_file() and not f.name.endswith(".pyc")]

@@ -24,9 +24,9 @@ jobs:
         with:
           python-version: "3.7"
       # Get the version
-      - name: Set variables
+      - name: Get Kit Version
         run: |
-          VER=$(cat VERSION.txt)
+          VER=$(cat VERSION)
           echo "KIT_VERSION=$VER" >> $GITHUB_ENV
       # Package zip
       - name: Package Kit
