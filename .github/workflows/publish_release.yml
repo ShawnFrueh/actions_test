@@ -23,6 +23,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.7"
+      # Get the version
+      - name: Set variables
+        run: |
+          VER=$(cat VERSION)
+          echo "VERSION=$VER" >> $KIT_VERSION
       # Package zip
       - name: Package Kit
         run: python build.py
@@ -33,8 +38,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ KIT_VERSION }}
+          release_name: Kit Name ${{ $KIT_VERSION }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -44,6 +49,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/test_kit_10.lpk
-          asset_name: test_kit_10.lpk
+          asset_path: ./build/test_kit_${{ $KIT_VERSION }}.lpk
+          asset_name: test_kit_${{ $KIT_VERSION }}.lpk
           asset_content_type: application/zip
