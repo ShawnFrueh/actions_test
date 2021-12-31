@@ -25,7 +25,7 @@ jobs:
           python-version: "3.7"
       # Package zip
       - name: Package Kit
-        run: build.py
+        run: python build.py
       # Create release
       - name: Create Release
         id: create_release
