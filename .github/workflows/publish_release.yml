@@ -27,7 +27,7 @@ jobs:
       - name: Set variables
         run: |
           VER=$(cat VERSION)
-          echo "VERSION=$VER" >> $KIT_VERSION
+          echo "KIT_VERSION=$VER" >> $GITHUB_ENV
       # Package zip
       - name: Package Kit
         run: python build.py
@@ -38,8 +38,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ KIT_VERSION }}
-          release_name: Kit Name ${{ $KIT_VERSION }}
+          tag_name: ${{ env.KIT_VERSION }}
+          release_name: Kit Name ${{ env.KIT_VERSION }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -49,6 +49,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/test_kit_${{ $KIT_VERSION }}.lpk
-          asset_name: test_kit_${{ $KIT_VERSION }}.lpk
+          asset_path: ./build/test_kit_${{ env.KIT_VERSION }}.lpk
+          asset_name: test_kit_${{ env.KIT_VERSION }}.lpk
           asset_content_type: application/zip
